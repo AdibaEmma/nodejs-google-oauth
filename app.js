@@ -6,7 +6,6 @@ const morgan = require("morgan")
 
 const connectDB = require("./db")
 const storiesRoutes = require("./routes/index")
-const { purge } = require("./routes/index")
 
 // connect to database
 connectDB()
@@ -30,6 +29,6 @@ app.use(express.static(path.join(__dirname, "public")))
 app.use("/", storiesRoutes)
 
 const PORT = process.env.PORT || 5000
-app.listen(PORT, ()=> {
+app.listen(PORT, () => {
     console.log(`server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
 })
