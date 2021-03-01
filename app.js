@@ -1,6 +1,7 @@
 require("dotenv").config()
 const path = require("path")
 const express = require("express")
+const bodyParser = require("body-parser")
 const mongoose = require("mongoose")
 const exphbs = require("express-handlebars")
 const passport = require("passport")
@@ -24,13 +25,25 @@ connectDB()
 // express server
 const app = express()
 
+// Body Parser
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(express.json())
+
+
 // Logging
 if(process.env.NODE_ENV === "development") {
     app.use(morgan("dev"))
 }
 
+// Handlebars Helpers
+const { formatDate } = require("./helpers/hbs")
+
 // Handlebars
-app.engine(".hbs", exphbs({defaultLayout: "main", extname: ".hbs"}))
+app.engine(".hbs", exphbs({helpers: {
+    formatDate
+},
+defaultLayout: "main", 
+extname: ".hbs"}))
 app.set("view engine", ".hbs")
 
 // Sessions
