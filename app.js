@@ -9,8 +9,11 @@ const session = require("express-session")
 const MongoStore = require("connect-mongo")(session)
 const morgan = require("morgan")
 const connectDB = require("./config/db")
+
+
 const storiesRoutes = require("./routes/index")
 const authRoute = require("./routes/auth")
+const addStory = require("./routes/stories")
 
 // Passport config
 googleAuth(passport)
@@ -50,6 +53,7 @@ app.use(express.static(path.join(__dirname, "public")))
 // Routes
 app.use("/", storiesRoutes)
 app.use("/auth", authRoute)
+app.use("/stories", addStory)
 
 
 const PORT = process.env.PORT || 5000
