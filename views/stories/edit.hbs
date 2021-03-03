@@ -3,7 +3,7 @@
     <form action="/stories" method="POST" class="col s12">
         <div class="row">
             <div class="input-field">
-                <input type="text" name="title" id="title">
+                <input type="text" name="title" value="{{story.title}}" id="title">
                 <label for="title">Title</label>
             </div>
         </div>
@@ -21,15 +21,16 @@
          <div class="row">
             <div class="input-field">
                 <h5>Tell Us Your Story:</h5>
-                <textarea name="body" id="body"></textarea>
+                <textarea name="body" id="body">{{story.body}}</textarea>
             </div>
         </div>
 
          <div class="row">
             <div class="input-field">
-                <input type="submit" value="Save" class="btn">
+                <input type="submit" value="Edit" class="btn">
                <a href="/dashboard" class="btn orange">Cancel</a>
             </div>
         </div>
     </form>
 </div>
+
