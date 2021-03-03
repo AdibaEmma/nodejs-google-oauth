@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const { ensureAuth } = require("../middleware/auth")
+const { findById, findByIdAndUpdate } = require("../models/Story")
 
 const Story = require("../models/Story")
 
@@ -54,11 +55,32 @@ router.get("/edit/:id", ensureAuth, async (req, res) => {
 
     if (story.user != req.user.id) {
         res.redirect('/stories')
-    } else [
+    } else {
         res.render('stories/edit', {
             story,
         })
-    ]
+    }
+})
+
+// @desc Update Story
+// @route PUT /stories/:id
+router.get("/:id", ensureAuth, async (req, res) => {
+    let story = await findById(req.params.id).lean()
+
+    if (!story) {
+        return res.render('error/404')
+    }
+
+    if (story.user != req.user.id) {
+        res.redirect('/stories')
+    } else {
+       story = await findByIdAndUpdate({_id: req.params.id}, req.body, {
+           new: true,
+           runValidators: true
+       })
+
+       res.redirect('/dashboard')
+    }
 })
 
 
